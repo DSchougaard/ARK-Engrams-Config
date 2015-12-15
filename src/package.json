@@ -1,0 +1,12 @@
+{
+  "name": "ark-engrams",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "request": "*"
+    },
+  "author": "",
+  "license": "ISC"
+}
