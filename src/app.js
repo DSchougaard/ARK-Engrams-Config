@@ -1,6 +1,7 @@
-const request 	= require('request');
-const url 		= "http://ark.gamepedia.com/Crafting";
-const _ 		= require('lodash');
+const request 		= require('request');
+const url 			= "http://ark.gamepedia.com/Crafting";
+const _ 			= require('lodash');
+const regression 	= require('regression');
 
 request(url, function(error, response, body){
 	const thresholds 	= [2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85];
@@ -66,6 +67,8 @@ request(url, function(error, response, body){
 	var str = JSON.stringify(craftings, null, 2); 
 	//console.log(str);
 
+	var points = [[0,0]];
+	var totalEngrams = 0;
 	for( var i in thresholds ){
 		var sum = 0;
 		for( var j in craftings[thresholds[i]]  ){
@@ -75,6 +78,22 @@ request(url, function(error, response, body){
 		}
 		
 		console.log("Sum of engrams unlocked at lvl %d is: %d.", thresholds[i], sum);
+
+		totalEngrams += sum;
+		points.push([thresholds[i], totalEngrams]);
 	}
 
+	console.log("Dataset: " + points);
+
+	var result = regression('polynomial', points);
+	var result_pretty = JSON.stringify(result, null, 2); 
+	console.log(result_pretty);
+
+
+	var points2 = [[0,0]];
+	points2.push([maxLevel, totalEngrams]);
+
+	result = regression('polynomial', points2);
+	result_pretty = JSON.stringify(result, null, 2); 
+	console.log(result_pretty);
 });

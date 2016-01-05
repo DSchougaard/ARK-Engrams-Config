@@ -5,8 +5,9 @@
   "main": "app.js",
   "dependencies": {
     "lodash": "^3.10.1",
+    "regression": "^1.2.1",
     "request": "*"
-    },
+  },
   "author": "",
   "license": "ISC"
 }
